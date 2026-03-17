@@ -96,6 +96,11 @@ img = img[cy:cy+ch, cx:cx+cw]
 `
   }
 
+  // Remember size after crop (before processing resize) for output
+  code += `
+_pre_h, _pre_w = img.shape[:2]
+`
+
   // Resize for processing
   if (settings.resizeHeight) {
     if (settings.resizeHeightOnly) {
@@ -134,13 +139,14 @@ for i in range(${passes}):
         n.composite_layer(dst, dst.copy(), field=field, fieldno=field)
 `
 
-  // Output resize
+  // Output resize — restore to pre-processing dimensions
   if (settings.outputHeight) {
     code += `
 h, w = dst.shape[:2]
-out_h = ${settings.outputHeight}
-out_w = int(w * out_h / h)
-dst = cv2.resize(dst, (out_w, out_h), interpolation=cv2.INTER_LANCZOS4)
+out_h = min(${settings.outputHeight}, _pre_h)
+out_w = int(_pre_w * out_h / _pre_h)
+if out_w != w or out_h != h:
+    dst = cv2.resize(dst, (out_w, out_h), interpolation=cv2.INTER_LANCZOS4)
 `
   }
 
