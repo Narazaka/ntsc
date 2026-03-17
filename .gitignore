@@ -105,6 +105,10 @@ venv.bak/
 
 .idea/
 .claude/
+node_modules/
+web/public/ntsc.py
+web/public/ringPattern.npy
+web/styled-system/
 
 # Test output images
 out_*.png
