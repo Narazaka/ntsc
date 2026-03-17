@@ -1,4 +1,5 @@
 import { Box, Heading, Text } from '@chakra-ui/react'
+import { useI18n } from '../i18n'
 import type { AxisPresets } from '../types'
 
 interface Props {
@@ -8,11 +9,13 @@ interface Props {
 
 function AxisSelect({
   label,
+  description,
   value,
   options,
   onChange,
 }: {
   label: string
+  description?: string
   value: string
   options: { label: string; value: string }[]
   onChange: (v: string) => void
@@ -29,62 +32,69 @@ function AxisSelect({
           <option key={o.value as string} value={o.value as string}>{o.label}</option>
         ))}
       </select>
+      {description && <Text fontSize="xs" color="fg.muted">{description}</Text>}
     </Box>
   )
 }
 
 export function AxisControls({ axes, onChange }: Props) {
+  const { t } = useI18n()
   return (
     <Box display="flex" flexDirection="column" gap="3">
-      <Heading size="sm" fontWeight="semibold">Effect Axes</Heading>
+      <Heading size="sm" fontWeight="semibold">{t('section.effectAxes')}</Heading>
       <AxisSelect
-        label="NTSC Signal"
+        label={t('axis.ntsc.label')}
+        description={t('axis.ntsc.desc')}
         value={axes.ntsc}
         options={[
-          { label: 'Off', value: 'off' },
-          { label: 'Standard', value: 'standard' },
-          { label: 'Degraded', value: 'degraded' },
+          { label: t('axisLevel.off'), value: 'off' },
+          { label: t('axisLevel.standard'), value: 'standard' },
+          { label: t('axisLevel.degraded'), value: 'degraded' },
         ]}
         onChange={v => onChange({ ...axes, ntsc: v as AxisPresets['ntsc'] })}
       />
       <AxisSelect
-        label="VHS Tape Speed"
+        label={t('axis.vhs.label')}
+        description={t('axis.vhs.desc')}
         value={axes.vhs}
         options={[
-          { label: 'Off', value: 'off' },
-          { label: 'SP', value: 'SP' },
-          { label: 'LP', value: 'LP' },
-          { label: 'EP', value: 'EP' },
+          { label: t('axisLevel.off'), value: 'off' },
+          { label: t('axisLevel.SP'), value: 'SP' },
+          { label: t('axisLevel.LP'), value: 'LP' },
+          { label: t('axisLevel.EP'), value: 'EP' },
         ]}
         onChange={v => onChange({ ...axes, vhs: v as AxisPresets['vhs'] })}
       />
       <AxisSelect
-        label="Noise"
+        label={t('axis.noise.label')}
+        description={t('axis.noise.desc')}
         value={axes.noise}
         options={[
-          { label: 'Off', value: 'off' },
-          { label: 'Light', value: 'light' },
-          { label: 'Heavy', value: 'heavy' },
+          { label: t('axisLevel.off'), value: 'off' },
+          { label: t('axisLevel.light'), value: 'light' },
+          { label: t('axisLevel.heavy'), value: 'heavy' },
         ]}
         onChange={v => onChange({ ...axes, noise: v as AxisPresets['noise'] })}
       />
       <AxisSelect
-        label="Ghost"
+        label={t('axis.ghost.label')}
+        description={t('axis.ghost.desc')}
         value={axes.ghost}
         options={[
-          { label: 'Off', value: 'off' },
-          { label: 'Light', value: 'light' },
-          { label: 'Heavy', value: 'heavy' },
+          { label: t('axisLevel.off'), value: 'off' },
+          { label: t('axisLevel.light'), value: 'light' },
+          { label: t('axisLevel.heavy'), value: 'heavy' },
         ]}
         onChange={v => onChange({ ...axes, ghost: v as AxisPresets['ghost'] })}
       />
       <AxisSelect
-        label="Color Bleed"
+        label={t('axis.colorBleed.label')}
+        description={t('axis.colorBleed.desc')}
         value={axes.colorBleed}
         options={[
-          { label: 'Off', value: 'off' },
-          { label: 'Light', value: 'light' },
-          { label: 'Heavy', value: 'heavy' },
+          { label: t('axisLevel.off'), value: 'off' },
+          { label: t('axisLevel.light'), value: 'light' },
+          { label: t('axisLevel.heavy'), value: 'heavy' },
         ]}
         onChange={v => onChange({ ...axes, colorBleed: v as AxisPresets['colorBleed'] })}
       />

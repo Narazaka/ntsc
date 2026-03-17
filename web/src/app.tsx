@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'preact/hooks'
 import { Box, Flex, Heading, Button, Checkbox } from '@chakra-ui/react'
+import { useI18n } from './i18n'
 import { ImageInput } from './components/ImageInput'
 import { ResizeControls } from './components/ResizeControls'
 import { PresetBar } from './components/PresetBar'
@@ -10,6 +11,7 @@ import { DEFAULT_PARAMS, applyAxisPresets, COMBINED_PRESETS } from './presets'
 import type { NtscParams, ProcessingSettings, AxisPresets, CombinedPresetName, WorkerOutMessage } from './types'
 
 export function App() {
+  const { t, lang, setLang } = useI18n()
   // Image state
   const [imageData, setImageData] = useState<Uint8Array | null>(null)
   const [imageSize, setImageSize] = useState<{ width: number; height: number } | null>(null)
@@ -150,11 +152,16 @@ export function App() {
         flexDirection="column"
         gap="4"
       >
-        <Heading size="xl" fontWeight="bold">NTSC/VHS Effect</Heading>
+        <Flex alignItems="center" gap="2">
+          <Heading size="xl" fontWeight="bold">{t('app.title')}</Heading>
+          <Button size="xs" variant="outline" onClick={() => setLang(lang === 'en' ? 'ja' : 'en')}>
+            {lang === 'en' ? 'JA' : 'EN'}
+          </Button>
+        </Flex>
 
         {!workerReady && (
           <Box p="3" bg="bg.muted" borderRadius="md" fontSize="sm">
-            Loading Pyodide... (this may take a moment)
+            {t('app.loading')}
           </Box>
         )}
 
@@ -166,18 +173,18 @@ export function App() {
 
         <Flex gap="2" alignItems="center" flexWrap="wrap">
           <Button onClick={process} disabled={!imageData || !workerReady || processing}>
-            Apply
+            {t('app.apply')}
           </Button>
           <Checkbox.Root checked={realtime} onCheckedChange={(e) => setRealtime(!!e.checked)}>
             <Checkbox.HiddenInput />
             <Checkbox.Control />
-            <Checkbox.Label>Realtime Preview</Checkbox.Label>
+            <Checkbox.Label>{t('app.realtimePreview')}</Checkbox.Label>
           </Checkbox.Root>
         </Flex>
 
         {processedUrl && (
           <Button variant="outline" onClick={handleDownload}>
-            Download PNG
+            {t('app.download')}
           </Button>
         )}
       </Box>

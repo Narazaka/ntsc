@@ -1,11 +1,13 @@
 import { useCallback, useRef } from 'preact/hooks'
 import { Box, Text } from '@chakra-ui/react'
+import { useI18n } from '../i18n'
 
 interface Props {
   onImageLoad: (imageData: Uint8Array, width: number, height: number, originalUrl: string) => void
 }
 
 export function ImageInput({ onImageLoad }: Props) {
+  const { t } = useI18n()
   const inputRef = useRef<HTMLInputElement>(null)
 
   const processFile = useCallback((file: File) => {
@@ -55,7 +57,7 @@ export function ImageInput({ onImageLoad }: Props) {
       cursor="pointer"
       _hover={{ borderColor: 'blue.500', bg: 'bg.muted' }}
     >
-      <Text>Drop an image here or click to select</Text>
+      <Text>{t('imageInput.placeholder')}</Text>
       <input
         ref={inputRef}
         type="file"

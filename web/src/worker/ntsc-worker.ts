@@ -10,6 +10,7 @@ function post(msg: WorkerOutMessage, transfer?: Transferable[]) {
 
 async function initialize() {
   // Load Pyodide via dynamic import (ES module worker)
+  // @ts-ignore - CDN URL import
   const { loadPyodide: _loadPyodide } = await import('https://cdn.jsdelivr.net/pyodide/v0.27.4/full/pyodide.mjs')
   pyodide = await _loadPyodide()
   await pyodide.loadPackage(['numpy', 'scipy', 'opencv-python'])

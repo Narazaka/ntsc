@@ -1,5 +1,6 @@
 import { useState } from 'preact/hooks'
 import { Box, Checkbox, Text } from '@chakra-ui/react'
+import { useI18n } from '../i18n'
 
 interface Props {
   originalUrl: string | null
@@ -10,6 +11,7 @@ interface Props {
 
 export function Preview({ originalUrl, processedUrl, processing, error }: Props) {
   const [showOriginal, setShowOriginal] = useState(false)
+  const { t } = useI18n()
 
   if (!originalUrl) {
     return (
@@ -22,7 +24,7 @@ export function Preview({ originalUrl, processedUrl, processing, error }: Props)
         color="fg.muted"
         fontSize="lg"
       >
-        Drop an image or click to select
+        {t('imageInput.placeholder')}
       </Box>
     )
   }
@@ -36,11 +38,11 @@ export function Preview({ originalUrl, processedUrl, processing, error }: Props)
           <Checkbox.Root checked={showOriginal} onCheckedChange={(e) => setShowOriginal(!!e.checked)}>
             <Checkbox.HiddenInput />
             <Checkbox.Control />
-            <Checkbox.Label>Show Original</Checkbox.Label>
+            <Checkbox.Label>{t('preview.showOriginal')}</Checkbox.Label>
           </Checkbox.Root>
         )}
         {processing && (
-          <Text fontSize="sm" color="fg.muted">Processing...</Text>
+          <Text fontSize="sm" color="fg.muted">{t('preview.processing')}</Text>
         )}
         {error && (
           <Text fontSize="sm" color="red.500">{error}</Text>
