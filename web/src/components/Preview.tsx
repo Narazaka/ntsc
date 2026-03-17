@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'preact/hooks'
-import { Box, Text } from '@chakra-ui/react'
+import { Box, Button, Text } from '@chakra-ui/react'
 import { useI18n } from '../i18n'
+
+type FitMode = 'original' | 'processed'
 
 interface Props {
   originalUrl: string | null
@@ -31,7 +33,8 @@ function processFile(file: File, onImageLoad: Props['onImageLoad']) {
 }
 
 export function Preview({ originalUrl, processedUrl, processing, error, onImageLoad }: Props) {
-  const [opacity, setOpacity] = useState(100) // 0=original, 100=processed
+  const [opacity, setOpacity] = useState(100)
+  const [fitMode, setFitMode] = useState<FitMode>('processed')
   const [dragOver, setDragOver] = useState(false)
   const { t } = useI18n()
 
@@ -79,23 +82,50 @@ export function Preview({ originalUrl, processedUrl, processing, error, onImageL
   }
 
   const hasComparison = !!processedUrl
+  const baseImg = fitMode === 'original' ? originalUrl : processedUrl!
+  const overlayImg = fitMode === 'original' ? processedUrl! : originalUrl
 
   return (
     <Box {...dropProps} display="flex" flexDirection="column" gap="2" h="full">
+      {/* Controls row */}
       <Box display="flex" gap="2" alignItems="center" flexWrap="wrap">
         {hasComparison && (
-          <Box display="flex" alignItems="center" gap="2" flex="1" minW="200px">
-            <Text fontSize="xs" color="fg.muted" flexShrink={0}>{t('preview.original')}</Text>
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={opacity}
-              onInput={e => setOpacity(Number((e.target as HTMLInputElement).value))}
-              style={{ flex: 1 }}
-            />
-            <Text fontSize="xs" color="fg.muted" flexShrink={0}>{t('preview.processed')}</Text>
-          </Box>
+          <>
+            {/* Opacity slider with jump buttons */}
+            <Box display="flex" alignItems="center" gap="1" flex="1" minW="200px">
+              <Button size="xs" variant="outline" p="1" minW="auto" onClick={() => setOpacity(0)}>
+                <Text fontSize="xs">{t('preview.original')}</Text>
+              </Button>
+              <input
+                type="range"
+                min={0}
+                max={100}
+                value={opacity}
+                onInput={e => setOpacity(Number((e.target as HTMLInputElement).value))}
+                style={{ flex: 1 }}
+              />
+              <Button size="xs" variant="outline" p="1" minW="auto" onClick={() => setOpacity(100)}>
+                <Text fontSize="xs">{t('preview.processed')}</Text>
+              </Button>
+            </Box>
+            {/* Fit mode buttons */}
+            <Box display="flex" gap="1">
+              <Button
+                size="xs"
+                variant={fitMode === 'original' ? 'solid' : 'outline'}
+                onClick={() => setFitMode('original')}
+              >
+                {t('preview.fitOriginal')}
+              </Button>
+              <Button
+                size="xs"
+                variant={fitMode === 'processed' ? 'solid' : 'outline'}
+                onClick={() => setFitMode('processed')}
+              >
+                {t('preview.fitProcessed')}
+              </Button>
+            </Box>
+          </>
         )}
         {processing && (
           <Text fontSize="sm" color="fg.muted">{t('preview.processing')}</Text>
@@ -104,6 +134,7 @@ export function Preview({ originalUrl, processedUrl, processing, error, onImageL
           <Text fontSize="sm" color="red.500">{error}</Text>
         )}
       </Box>
+      {/* Image display */}
       <Box
         flex="1"
         overflow="auto"
@@ -117,14 +148,14 @@ export function Preview({ originalUrl, processedUrl, processing, error, onImageL
       >
         {hasComparison ? (
           <Box position="relative" display="inline-block">
-            {/* Original image (bottom layer) */}
+            {/* Base image (defines the size) */}
             <img
-              src={originalUrl}
+              src={baseImg}
               style={{ display: 'block', maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
             />
-            {/* Processed image (top layer with opacity) */}
+            {/* Overlay image */}
             <img
-              src={processedUrl}
+              src={overlayImg}
               style={{
                 position: 'absolute',
                 top: 0,
@@ -132,7 +163,9 @@ export function Preview({ originalUrl, processedUrl, processing, error, onImageL
                 width: '100%',
                 height: '100%',
                 objectFit: 'contain',
-                opacity: opacity / 100,
+                opacity: fitMode === 'original'
+                  ? opacity / 100        // original is base, processed overlay: 0=original, 100=processed
+                  : 1 - opacity / 100,    // processed is base, original overlay: 0=original, 100=processed
               }}
             />
           </Box>

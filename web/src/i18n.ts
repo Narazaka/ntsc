@@ -231,6 +231,8 @@ export const messages: Record<Lang, Messages> = {
       onionSkin: 'Compare',
       original: 'Original',
       processed: 'Processed',
+      fitOriginal: 'Fit to Original',
+      fitProcessed: 'Fit to Processed',
     },
   },
 
@@ -444,6 +446,8 @@ export const messages: Record<Lang, Messages> = {
       onionSkin: '比較',
       original: '元画像',
       processed: '処理後',
+      fitOriginal: '元画像サイズに合わせる',
+      fitProcessed: '処理後サイズに合わせる',
     },
   },
 }
