@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'preact/hooks'
+import { useState, useCallback, useRef, useEffect } from 'preact/hooks'
 import ReactCrop from 'react-image-crop'
 import type { Crop, PixelCrop } from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
@@ -76,6 +76,17 @@ export function CropControl({ originalUrl, imageSize, crop, onChange }: Props) {
     onChange(null)
     setShowCrop(false)
   }, [onChange])
+
+  // When image changes, recalculate crop for new aspect ratio
+  useEffect(() => {
+    if (showCrop && aspect !== undefined && imageSize) {
+      handleAspectChange(aspect)
+    } else if (showCrop && aspect === undefined) {
+      // Free crop: reset to no crop on image change
+      setReactCrop(undefined)
+      onChange(null)
+    }
+  }, [originalUrl, imageSize])
 
   if (!originalUrl) return null
 
