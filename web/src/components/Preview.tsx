@@ -152,44 +152,58 @@ export function Preview({ originalUrl, croppedOriginalUrl, processedUrl, process
         transition="border-color 0.2s"
       >
         {hasComparison ? (
-          <Box position="relative" display="inline-block">
-            {/* Base image (defines the size) */}
+          opacity === 100 ? (
+            // Processed only — single img for clean right-click copy
             <img
-              src={baseImg}
-              style={{ display: 'block', maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+              src={processedUrl!}
+              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
             />
-            {/* Overlay image */}
-            {fitMode === 'original' && crop ? (
-              // Processed image is cropped, position it at the crop location over the original
+          ) : opacity === 0 ? (
+            // Original only
+            <img
+              src={originalUrl}
+              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+            />
+          ) : (
+            // Onion skin comparison
+            <Box position="relative" display="inline-block">
+              {/* Base image (defines the size), not interactive */}
               <img
-                src={processedUrl!}
-                style={{
-                  position: 'absolute',
-                  left: `${crop.x}%`,
-                  top: `${crop.y}%`,
-                  width: `${crop.width}%`,
-                  height: `${crop.height}%`,
-                  objectFit: 'fill',
-                  opacity: opacity / 100,
-                }}
+                src={baseImg}
+                style={{ display: 'block', maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', pointerEvents: 'none' }}
               />
-            ) : (
-              <img
-                src={overlayImg}
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'contain',
-                  opacity: fitMode === 'original'
-                    ? opacity / 100
-                    : 1 - opacity / 100,
-                }}
-              />
-            )}
-          </Box>
+              {/* Overlay image — receives pointer events for right-click */}
+              {fitMode === 'original' && crop ? (
+                <img
+                  src={processedUrl!}
+                  style={{
+                    position: 'absolute',
+                    left: `${crop.x}%`,
+                    top: `${crop.y}%`,
+                    width: `${crop.width}%`,
+                    height: `${crop.height}%`,
+                    objectFit: 'fill',
+                    opacity: opacity / 100,
+                  }}
+                />
+              ) : (
+                <img
+                  src={overlayImg}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    opacity: fitMode === 'original'
+                      ? opacity / 100
+                      : 1 - opacity / 100,
+                  }}
+                />
+              )}
+            </Box>
+          )
         ) : (
           <img
             src={originalUrl}
