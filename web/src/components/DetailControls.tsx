@@ -69,51 +69,56 @@ export function DetailControls({ params, onChange }: Props) {
         cursor="pointer"
         bg="transparent"
         border="none"
-        p="0"
+        borderTopWidth="1px"
+        borderColor="border.default"
+        pt="3"
+        pl="0"
+        pr="0"
+        pb="0"
         color="inherit"
-        fontSize="sm"
+        fontSize="md"
       >
         {open ? '\u25BC' : '\u25B6'} {t('section.detailParameters')}
       </Box>
       {open && (
         <Box display="flex" flexDirection="column" gap="3" pl="2">
-          <Heading size="xs" fontWeight="medium" color="fg.muted">{t('detailSection.composite')}</Heading>
+          <Heading size="sm" fontWeight="medium" color="fg.muted" mt="2">{t('detailSection.composite')}</Heading>
           <SliderControl label={t('compositePreemphasis.label')} description={t('compositePreemphasis.desc')} value={params.compositePreemphasis} min={0} max={8} step={0.1} onChange={v => set('compositePreemphasis', v)} />
           <ToggleControl label={t('chromaLowpassIn.label')} description={t('chromaLowpassIn.desc')} value={params.chromaLowpassIn} onChange={v => set('chromaLowpassIn', v)} />
           <ToggleControl label={t('chromaLowpassOut.label')} description={t('chromaLowpassOut.desc')} value={params.chromaLowpassOut} onChange={v => set('chromaLowpassOut', v)} />
           <ToggleControl label={t('chromaLowpassOutLite.label')} description={t('chromaLowpassOutLite.desc')} value={params.chromaLowpassOutLite} onChange={v => set('chromaLowpassOutLite', v)} />
 
-          <Heading size="xs" fontWeight="medium" color="fg.muted">{t('detailSection.noise')}</Heading>
+          <Heading size="sm" fontWeight="medium" color="fg.muted" mt="2">{t('detailSection.noise')}</Heading>
           <SliderControl label={t('videoNoise.label')} description={t('videoNoise.desc')} value={params.videoNoise} min={0} max={4200} step={1} onChange={v => set('videoNoise', v)} />
           <SliderControl label={t('chromaNoise.label')} description={t('chromaNoise.desc')} value={params.chromaNoise} min={0} max={16384} step={1} onChange={v => set('chromaNoise', v)} />
           <SliderControl label={t('chromaPhaseNoise.label')} description={t('chromaPhaseNoise.desc')} value={params.chromaPhaseNoise} min={0} max={50} step={1} onChange={v => set('chromaPhaseNoise', v)} />
           <SliderControl label={t('chromaLoss.label')} description={t('chromaLoss.desc')} value={params.chromaLoss} min={0} max={100000} step={100} onChange={v => set('chromaLoss', v)} />
 
-          <Heading size="xs" fontWeight="medium" color="fg.muted">{t('detailSection.ringing')}</Heading>
+          <Heading size="sm" fontWeight="medium" color="fg.muted" mt="2">{t('detailSection.ringing')}</Heading>
           <SliderControl label={t('ringing.label')} description={t('ringing.desc')} value={params.ringing} min={0.3} max={1.0} step={0.01} onChange={v => set('ringing', v)} />
           <ToggleControl label={t('enableRinging2.label')} description={t('enableRinging2.desc')} value={params.enableRinging2} onChange={v => set('enableRinging2', v)} />
           <SliderControl label={t('ringingPower.label')} description={t('ringingPower.desc')} value={params.ringingPower} min={2} max={7} step={1} onChange={v => set('ringingPower', v)} />
           <SliderControl label={t('freqNoiseSize.label')} description={t('freqNoiseSize.desc')} value={params.freqNoiseSize} min={0} max={0.99} step={0.01} onChange={v => set('freqNoiseSize', v)} />
           <SliderControl label={t('freqNoiseAmplitude.label')} description={t('freqNoiseAmplitude.desc')} value={params.freqNoiseAmplitude} min={0} max={5} step={0.1} onChange={v => set('freqNoiseAmplitude', v)} />
 
-          <Heading size="xs" fontWeight="medium" color="fg.muted">{t('detailSection.colorBleed')}</Heading>
+          <Heading size="sm" fontWeight="medium" color="fg.muted" mt="2">{t('detailSection.colorBleed')}</Heading>
           <SliderControl label={t('colorBleedHoriz.label')} description={t('colorBleedHoriz.desc')} value={params.colorBleedHoriz} min={0} max={10} step={1} onChange={v => set('colorBleedHoriz', v)} />
           <SliderControl label={t('colorBleedVert.label')} description={t('colorBleedVert.desc')} value={params.colorBleedVert} min={0} max={10} step={1} onChange={v => set('colorBleedVert', v)} />
           <ToggleControl label={t('colorBleedBefore.label')} description={t('colorBleedBefore.desc')} value={params.colorBleedBefore} onChange={v => set('colorBleedBefore', v)} />
 
-          <Heading size="xs" fontWeight="medium" color="fg.muted">{t('detailSection.subcarrier')}</Heading>
+          <Heading size="sm" fontWeight="medium" color="fg.muted" mt="2">{t('detailSection.subcarrier')}</Heading>
           <SliderControl label={t('subcarrierAmplitude.label')} description={t('subcarrierAmplitude.desc')} value={params.subcarrierAmplitude} min={1} max={100} step={1} onChange={v => set('subcarrierAmplitude', v)} />
           <SliderControl label={t('subcarrierAmplitudeBack.label')} description={t('subcarrierAmplitudeBack.desc')} value={params.subcarrierAmplitudeBack} min={1} max={100} step={1} onChange={v => set('subcarrierAmplitudeBack', v)} />
           <SelectControl label={t('scanlinePhaseShift.label')} value={params.scanlinePhaseShift} options={[0, 90, 180, 270]} onChange={v => set('scanlinePhaseShift', v)} />
           <SliderControl label={t('scanlinePhaseShiftOffset.label')} description={t('scanlinePhaseShiftOffset.desc')} value={params.scanlinePhaseShiftOffset} min={0} max={3} step={1} onChange={v => set('scanlinePhaseShiftOffset', v)} />
 
-          <Heading size="xs" fontWeight="medium" color="fg.muted">{t('detailSection.vhs')}</Heading>
+          <Heading size="sm" fontWeight="medium" color="fg.muted" mt="2">{t('detailSection.vhs')}</Heading>
           <SliderControl label={t('vhsSharpen.label')} description={t('vhsSharpen.desc')} value={params.vhsSharpen} min={1} max={5} step={0.1} onChange={v => set('vhsSharpen', v)} />
           <SliderControl label={t('vhsEdgeWave.label')} description={t('vhsEdgeWave.desc')} value={params.vhsEdgeWave} min={0} max={10} step={1} onChange={v => set('vhsEdgeWave', v)} />
           <ToggleControl label={t('vhsChromaVertBlend.label')} description={t('vhsChromaVertBlend.desc')} value={params.vhsChromaVertBlend} onChange={v => set('vhsChromaVertBlend', v)} />
           <ToggleControl label={t('vhsSvideoOut.label')} description={t('vhsSvideoOut.desc')} value={params.vhsSvideoOut} onChange={v => set('vhsSvideoOut', v)} />
 
-          <Heading size="xs" fontWeight="medium" color="fg.muted">{t('detailSection.processing')}</Heading>
+          <Heading size="sm" fontWeight="medium" color="fg.muted" mt="2">{t('detailSection.processing')}</Heading>
           <SliderControl label={t('passes.label')} description={t('passes.desc')} value={params.passes} min={1} max={5} step={1} onChange={v => set('passes', v)} />
           <Box as="label" fontSize="sm" display="flex" flexDirection="column" gap="1">
             <Text fontSize="sm">{t('seed.label')}</Text>

@@ -24,7 +24,7 @@ export function PresetBar({ axes, onSelect }: Props) {
 
   return (
     <Box display="flex" flexDirection="column" gap="2">
-      <Heading size="sm" fontWeight="semibold">{t('section.presets')}</Heading>
+      <Heading size="sm" fontWeight="semibold" borderTopWidth="1px" borderColor="border.default" pt="3">{t('section.presets')}</Heading>
       <Flex flexWrap="wrap" gap="2">
         {presetNames.map(name => (
           <Button

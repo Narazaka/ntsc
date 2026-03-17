@@ -41,7 +41,7 @@ export function AxisControls({ axes, onChange }: Props) {
   const { t } = useI18n()
   return (
     <Box display="flex" flexDirection="column" gap="2">
-      <Heading size="sm" fontWeight="semibold">{t('section.effectAxes')}</Heading>
+      <Heading size="sm" fontWeight="semibold" borderTopWidth="1px" borderColor="border.default" pt="3">{t('section.effectAxes')}</Heading>
       <AxisRow
         label={t('axis.ntsc.label')}
         value={axes.ntsc}

@@ -101,7 +101,7 @@ export function CropControl({ originalUrl, imageSize, crop, onChange }: Props) {
 
   return (
     <Box display="flex" flexDirection="column" gap="2">
-      <Heading size="sm" fontWeight="semibold">{t('processingSettings.crop')}</Heading>
+      <Heading size="sm" fontWeight="semibold" borderTopWidth="1px" borderColor="border.default" pt="3">{t('processingSettings.crop')}</Heading>
       <Box display="flex" gap="1" flexWrap="wrap">
         <Button size="xs" variant={!showCrop ? 'solid' : 'outline'} onClick={handleReset}>
           {t('crop.none')}

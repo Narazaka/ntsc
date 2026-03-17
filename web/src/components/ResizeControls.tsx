@@ -24,7 +24,7 @@ export function ResizeControls({ settings, onChange }: Props) {
 
   return (
     <Box display="flex" flexDirection="column" gap="3">
-      <Heading size="sm" fontWeight="semibold">{t('section.processingSettings')}</Heading>
+      <Heading size="sm" fontWeight="semibold" borderTopWidth="1px" borderColor="border.default" pt="3">{t('section.processingSettings')}</Heading>
 
       <Box display="flex" flexDirection="column" gap="1">
         <Text fontSize="sm">{t('processingSettings.resolution')}</Text>
