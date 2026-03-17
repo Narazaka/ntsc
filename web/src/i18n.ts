@@ -324,14 +324,14 @@ export const messages: Record<Lang, Messages> = {
     },
 
     axisLevel: {
-      off: '\u30aa\u30d5',
-      standard: '\u6a19\u6e96',
-      degraded: '\u52a3\u5316',
-      light: '\u8efd\u5ea6',
-      heavy: '\u5f37\u5ea6',
-      SP: 'SP',
-      LP: 'LP',
-      EP: 'EP',
+      off: 'オフ',
+      standard: '標準',
+      degraded: '劣化',
+      light: '軽度',
+      heavy: '強度',
+      SP: '標準',
+      LP: '2倍',
+      EP: '3倍',
     },
 
     compositePreemphasis: {
