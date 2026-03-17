@@ -7,7 +7,7 @@ import cv2
 import numpy
 import scipy
 from scipy.signal import lfilter
-from scipy.ndimage.interpolation import shift
+from scipy.ndimage import shift
 
 import numpy as np
 import cv2
@@ -17,7 +17,8 @@ M_PI = math.pi
 Int_MIN_VALUE = -2147483648
 Int_MAX_VALUE = 2147483647
 
-RingPattern = np.load('ringPattern.npy')
+import os as _os
+RingPattern = np.load(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), 'ringPattern.npy'))
 
 
 def ringing(img2d, alpha=0.5, noiseSize=0, noiseValue=2, clip=True, seed=None):
