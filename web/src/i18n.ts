@@ -43,10 +43,10 @@ export const messages: Record<Lang, Messages> = {
 
     resolution: {
       original: 'Original',
-      '960p': '960p',
-      '486p': '486p (NTSC)',
-      '480p': '480p',
-      '240p': '240p',
+      '960p': '960',
+      '486p': '486 (NTSC)',
+      '480p': '480',
+      '240p': '240',
       proportional: 'Scale all',
       heightOnly: 'Height only',
       heightOnlyDesc: 'Analog video has no horizontal pixel resolution — only scanline count matters. Use "Original size" output to restore correct aspect ratio.',
@@ -282,10 +282,10 @@ export const messages: Record<Lang, Messages> = {
 
     resolution: {
       original: 'オリジナル',
-      '960p': '960p',
-      '486p': '486p (NTSC)',
-      '480p': '480p',
-      '240p': '240p',
+      '960p': '960',
+      '486p': '486 (NTSC)',
+      '480p': '480',
+      '240p': '240',
       proportional: '縦横',
       heightOnly: '縦のみ',
       heightOnlyDesc: 'アナログ映像には横のピクセル解像度がなく、走査線数（縦）のみが解像度を決定します。出力を「元のサイズ」にするとアスペクト比が復元されます。',
@@ -441,7 +441,7 @@ export const messages: Record<Lang, Messages> = {
     },
     vhsHeadSwitching: {
       label: 'ヘッドスイッチングノイズ',
-      desc: 'VHSヘッド切替による画面下部のノイズ（高さ486px以上で有効）',
+      desc: 'VHSヘッド切替による画面下部のノイズ（高さ486以上で有効）',
     },
     vhsChromaVertBlend: {
       label: 'クロマ垂直ブレンド',
