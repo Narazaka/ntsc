@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'preact/hooks'
-import { Box, Checkbox, Text } from '@chakra-ui/react'
+import { Box, Text } from '@chakra-ui/react'
 import { useI18n } from '../i18n'
 
 interface Props {
@@ -31,7 +31,7 @@ function processFile(file: File, onImageLoad: Props['onImageLoad']) {
 }
 
 export function Preview({ originalUrl, processedUrl, processing, error, onImageLoad }: Props) {
-  const [showOriginal, setShowOriginal] = useState(false)
+  const [opacity, setOpacity] = useState(100) // 0=original, 100=processed
   const [dragOver, setDragOver] = useState(false)
   const { t } = useI18n()
 
@@ -78,17 +78,24 @@ export function Preview({ originalUrl, processedUrl, processing, error, onImageL
     )
   }
 
-  const displayUrl = showOriginal ? originalUrl : (processedUrl ?? originalUrl)
+  const hasComparison = !!processedUrl
 
   return (
     <Box {...dropProps} display="flex" flexDirection="column" gap="2" h="full">
-      <Box display="flex" gap="2" alignItems="center">
-        {processedUrl && (
-          <Checkbox.Root checked={showOriginal} onCheckedChange={(e) => setShowOriginal(!!e.checked)}>
-            <Checkbox.HiddenInput />
-            <Checkbox.Control />
-            <Checkbox.Label>{t('preview.showOriginal')}</Checkbox.Label>
-          </Checkbox.Root>
+      <Box display="flex" gap="2" alignItems="center" flexWrap="wrap">
+        {hasComparison && (
+          <Box display="flex" alignItems="center" gap="2" flex="1" minW="200px">
+            <Text fontSize="xs" color="fg.muted" flexShrink={0}>{t('preview.original')}</Text>
+            <input
+              type="range"
+              min={0}
+              max={100}
+              value={opacity}
+              onInput={e => setOpacity(Number((e.target as HTMLInputElement).value))}
+              style={{ flex: 1 }}
+            />
+            <Text fontSize="xs" color="fg.muted" flexShrink={0}>{t('preview.processed')}</Text>
+          </Box>
         )}
         {processing && (
           <Text fontSize="sm" color="fg.muted">{t('preview.processing')}</Text>
@@ -108,10 +115,33 @@ export function Preview({ originalUrl, processedUrl, processing, error, onImageL
         borderRadius="md"
         transition="border-color 0.2s"
       >
-        <img
-          src={displayUrl}
-          style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
-        />
+        {hasComparison ? (
+          <Box position="relative" display="inline-block">
+            {/* Original image (bottom layer) */}
+            <img
+              src={originalUrl}
+              style={{ display: 'block', maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+            />
+            {/* Processed image (top layer with opacity) */}
+            <img
+              src={processedUrl}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                opacity: opacity / 100,
+              }}
+            />
+          </Box>
+        ) : (
+          <img
+            src={originalUrl}
+            style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+          />
+        )}
       </Box>
     </Box>
   )

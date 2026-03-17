@@ -228,6 +228,9 @@ export const messages: Record<Lang, Messages> = {
       showOriginal: 'Show Original',
       processing: 'Processing...',
       error: 'Error',
+      onionSkin: 'Compare',
+      original: 'Original',
+      processed: 'Processed',
     },
   },
 
@@ -435,9 +438,12 @@ export const messages: Record<Lang, Messages> = {
     },
 
     preview: {
-      showOriginal: '\u5143\u753b\u50cf\u3092\u8868\u793a',
-      processing: '\u51e6\u7406\u4e2d...',
-      error: '\u30a8\u30e9\u30fc',
+      showOriginal: '元画像を表示',
+      processing: '処理中...',
+      error: 'エラー',
+      onionSkin: '比較',
+      original: '元画像',
+      processed: '処理後',
     },
   },
 }
