@@ -29,7 +29,7 @@ export function App() {
   })
 
   // UI state
-  const [realtime, setRealtime] = useState(false)
+  const [realtime, setRealtime] = useState(true)
   const [processing, setProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [workerReady, setWorkerReady] = useState(false)
