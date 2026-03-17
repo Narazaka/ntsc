@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'preact/hooks'
 import { Box, Flex, Heading, Button, Checkbox } from '@chakra-ui/react'
+import { Github } from 'lucide-react'
 import { useI18n } from './i18n'
 import { ImageInput } from './components/ImageInput'
 import { ResizeControls } from './components/ResizeControls'
@@ -200,8 +201,11 @@ export function App() {
         flexDirection="column"
         gap="4"
       >
-        <Flex alignItems="center" gap="2">
+        <Flex alignItems="center" gap="2" flexWrap="wrap">
           <Heading size="xl" fontWeight="bold">{t('app.title')}</Heading>
+          <a href="https://github.com/Narazaka/ntsc" target="_blank" rel="noopener noreferrer" title="GitHub" style={{ display: 'flex', alignItems: 'center', color: 'inherit' }}>
+            <Github size={20} />
+          </a>
           <Button size="xs" variant="outline" onClick={() => setLang(lang === 'en' ? 'ja' : 'en')}>
             {lang === 'en' ? 'JA' : 'EN'}
           </Button>
