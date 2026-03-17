@@ -203,6 +203,10 @@ export const messages: Record<Lang, Messages> = {
       label: 'Edge Wave',
       desc: 'Horizontal edge distortion from tape transport instability',
     },
+    vhsHeadSwitching: {
+      label: 'Head Switching Noise',
+      desc: 'Noise at the bottom of the frame from VHS head switching (needs height >= 486)',
+    },
     vhsChromaVertBlend: {
       label: 'Chroma Vert Blend',
       desc: 'Blends adjacent scanline colors (VHS format behavior)',
@@ -433,8 +437,12 @@ export const messages: Record<Lang, Messages> = {
       label: '\u30a8\u30c3\u30b8\u30a6\u30a7\u30fc\u30d6',
       desc: '\u30c6\u30fc\u30d7\u8d70\u884c\u306e\u4e0d\u5b89\u5b9a\u3055\u306b\u3088\u308b\u6c34\u5e73\u65b9\u5411\u306e\u30a8\u30c3\u30b8\u6b6a\u307f',
     },
+    vhsHeadSwitching: {
+      label: 'ヘッドスイッチングノイズ',
+      desc: 'VHSヘッド切替による画面下部のノイズ（高さ486px以上で有効）',
+    },
     vhsChromaVertBlend: {
-      label: '\u30af\u30ed\u30de\u5782\u76f4\u30d6\u30ec\u30f3\u30c9',
+      label: 'クロマ垂直ブレンド',
       desc: '\u96a3\u63a5\u8d70\u67fb\u7dda\u306e\u8272\u3092\u6df7\u5408\uff08VHS \u30d5\u30a9\u30fc\u30de\u30c3\u30c8\u306e\u7279\u6027\uff09',
     },
     vhsSvideoOut: {

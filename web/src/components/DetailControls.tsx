@@ -115,6 +115,7 @@ export function DetailControls({ params, onChange }: Props) {
           <Heading size="sm" fontWeight="medium" color="fg.muted" mt="2">{t('detailSection.vhs')}</Heading>
           <SliderControl label={t('vhsSharpen.label')} description={t('vhsSharpen.desc')} value={params.vhsSharpen} min={1} max={5} step={0.1} onChange={v => set('vhsSharpen', v)} />
           <SliderControl label={t('vhsEdgeWave.label')} description={t('vhsEdgeWave.desc')} value={params.vhsEdgeWave} min={0} max={10} step={1} onChange={v => set('vhsEdgeWave', v)} />
+          <ToggleControl label={t('vhsHeadSwitching.label')} description={t('vhsHeadSwitching.desc')} value={params.vhsHeadSwitching} onChange={v => set('vhsHeadSwitching', v)} />
           <ToggleControl label={t('vhsChromaVertBlend.label')} description={t('vhsChromaVertBlend.desc')} value={params.vhsChromaVertBlend} onChange={v => set('vhsChromaVertBlend', v)} />
           <ToggleControl label={t('vhsSvideoOut.label')} description={t('vhsSvideoOut.desc')} value={params.vhsSvideoOut} onChange={v => set('vhsSvideoOut', v)} />
 

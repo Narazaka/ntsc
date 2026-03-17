@@ -402,7 +402,7 @@ class Ntsc:
         shy = 0
         noise = 0.0
         if self._vhs_head_switching_phase_noise != 0.0:
-            x = numpy.int32(self.rand() * self.rand() * self.rand() * self.rand())
+            x = numpy.int32((int(self.rand()) * int(self.rand()) * int(self.rand()) * int(self.rand())) % (2**31))
             x %= 2000000000
             noise = x / 1000000000.0 - 1.0
             noise *= self._vhs_head_switching_phase_noise

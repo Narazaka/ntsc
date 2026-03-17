@@ -75,6 +75,7 @@ n._emulating_vhs = ${pyBool(params.emulatingVhs)}
 n._output_vhs_tape_speed = ${vhsSpeedMap[params.vhsTapeSpeed]}
 n._vhs_out_sharpen = ${params.vhsSharpen}
 n._vhs_edge_wave = ${params.vhsEdgeWave}
+n._vhs_head_switching = ${pyBool(params.vhsHeadSwitching)}
 n._vhs_chroma_vert_blend = ${pyBool(params.vhsChromaVertBlend)}
 n._vhs_svideo_out = ${pyBool(params.vhsSvideoOut)}
 `

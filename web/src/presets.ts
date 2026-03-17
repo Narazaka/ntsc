@@ -27,6 +27,7 @@ export const DEFAULT_PARAMS: NtscParams = {
   vhsTapeSpeed: 'SP',
   vhsSharpen: 1.5,
   vhsEdgeWave: 0,
+  vhsHeadSwitching: false,
   vhsChromaVertBlend: true,
   vhsSvideoOut: false,
   passes: 1,

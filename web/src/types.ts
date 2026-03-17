@@ -36,6 +36,7 @@ export interface NtscParams {
   vhsTapeSpeed: 'SP' | 'LP' | 'EP'
   vhsSharpen: number                 // 1..5
   vhsEdgeWave: number                // 0..10
+  vhsHeadSwitching: boolean
   vhsChromaVertBlend: boolean
   vhsSvideoOut: boolean
 
