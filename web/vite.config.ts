@@ -13,6 +13,7 @@ if (existsSync(resolve(parentDir, 'ntsc.py'))) {
 }
 
 export default defineConfig({
+  base: process.env.GITHUB_ACTIONS ? '/ntsc/' : '/',
   plugins: [preact()],
   worker: {
     format: 'es',

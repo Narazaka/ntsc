@@ -16,9 +16,12 @@ async function initialize() {
   await pyodide.loadPackage(['numpy', 'scipy', 'opencv-python'])
 
   // Fetch ntsc.py and ringPattern.npy from same origin
+  // Derive base path from worker URL (handles subpath deployment like /ntsc/)
+  const workerUrl = self.location.href
+  const basePath = workerUrl.substring(0, workerUrl.lastIndexOf('/assets/') + 1) || '/'
   const [ntscPy, ringPattern] = await Promise.all([
-    fetch('/ntsc.py').then(r => r.text()),
-    fetch('/ringPattern.npy').then(r => r.arrayBuffer()),
+    fetch(basePath + 'ntsc.py').then(r => r.text()),
+    fetch(basePath + 'ringPattern.npy').then(r => r.arrayBuffer()),
   ])
 
   // Write to virtual FS
