@@ -24,8 +24,8 @@ const ASPECT_RATIOS: { label: string; value: number | null }[] = [
 export function CropControl({ originalUrl, imageSize, crop, onChange }: Props) {
   const { t } = useI18n()
   const [reactCrop, setReactCrop] = useState<Crop | undefined>(undefined)
-  const [aspect, setAspect] = useState<number | undefined>(undefined)
-  const [showCrop, setShowCrop] = useState(false)
+  const [aspect, setAspect] = useState<number | undefined>(4 / 3)
+  const [showCrop, setShowCrop] = useState(true)
   const imgRef = useRef<HTMLImageElement | null>(null)
 
   const handleCropComplete = useCallback((_pixelCrop: PixelCrop, percentCrop: Crop) => {
