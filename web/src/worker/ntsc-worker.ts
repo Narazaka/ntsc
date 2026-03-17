@@ -98,7 +98,16 @@ img = img[cy:cy+ch, cx:cx+cw]
 
   // Resize for processing
   if (settings.resizeHeight) {
-    code += `
+    if (settings.resizeHeightOnly) {
+      code += `
+h, w = img.shape[:2]
+proc_h = ${settings.resizeHeight}
+proc_h = proc_h // 2 * 2
+proc_w = w // 2 * 2
+img = cv2.resize(img, (proc_w, proc_h), interpolation=cv2.INTER_AREA)
+`
+    } else {
+      code += `
 h, w = img.shape[:2]
 proc_h = ${settings.resizeHeight}
 proc_w = int(w * proc_h / h)
@@ -106,6 +115,7 @@ proc_w = proc_w // 2 * 2
 proc_h = proc_h // 2 * 2
 img = cv2.resize(img, (proc_w, proc_h), interpolation=cv2.INTER_AREA)
 `
+    }
   } else {
     code += `
 h, w = img.shape[:2]

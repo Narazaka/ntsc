@@ -27,7 +27,7 @@ export function App() {
     ...COMBINED_PRESETS['vhs-ep-ghost'],
   })
   const [settings, setSettings] = useState<ProcessingSettings>({
-    resizeHeight: 480, crop: null, outputHeight: null,
+    resizeHeight: 480, resizeHeightOnly: false, crop: null, outputHeight: null,
   })
 
   // UI state
@@ -129,7 +129,7 @@ export function App() {
       let outW = sw, outH = sh
       if (settings.resizeHeight) {
         outH = settings.resizeHeight
-        outW = Math.floor(sw * outH / sh)
+        outW = settings.resizeHeightOnly ? sw : Math.floor(sw * outH / sh)
         // Ensure even
         outW = Math.floor(outW / 2) * 2
         outH = Math.floor(outH / 2) * 2
@@ -145,7 +145,7 @@ export function App() {
       setCroppedOriginalUrl(prev => { if (prev && prev.startsWith('blob:')) URL.revokeObjectURL(prev); return url })
     }
     img.src = originalUrl
-  }, [originalUrl, imageSize, settings.crop, settings.resizeHeight])
+  }, [originalUrl, imageSize, settings.crop, settings.resizeHeight, settings.resizeHeightOnly])
 
   // Handle image load
   const handleImageLoad = useCallback((data: Uint8Array, width: number, height: number, url: string) => {

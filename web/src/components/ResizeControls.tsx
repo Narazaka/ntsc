@@ -40,6 +40,29 @@ export function ResizeControls({ settings, onChange }: Props) {
             </Button>
           ))}
         </Box>
+        {settings.resizeHeight && (
+          <Box>
+            <Box display="flex" gap="1" mt="1">
+              <Button
+                size="xs"
+                variant={!settings.resizeHeightOnly ? 'solid' : 'outline'}
+                onClick={() => onChange({ ...settings, resizeHeightOnly: false })}
+              >
+                {t('resolution.proportional')}
+              </Button>
+              <Button
+                size="xs"
+                variant={settings.resizeHeightOnly ? 'solid' : 'outline'}
+                onClick={() => onChange({ ...settings, resizeHeightOnly: true })}
+              >
+                {t('resolution.heightOnly')}
+              </Button>
+            </Box>
+            {settings.resizeHeightOnly && (
+              <Text fontSize="xs" color="fg.muted" mt="1">{t('resolution.heightOnlyDesc')}</Text>
+            )}
+          </Box>
+        )}
       </Box>
 
       <Box display="flex" flexDirection="column" gap="1">

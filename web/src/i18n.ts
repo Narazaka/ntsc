@@ -46,6 +46,9 @@ export const messages: Record<Lang, Messages> = {
       '960p': '960p',
       '480p': '480p',
       '240p': '240p',
+      proportional: 'Scale all',
+      heightOnly: 'Height only',
+      heightOnlyDesc: 'Analog video has no horizontal pixel resolution — only scanline count matters',
     },
 
     crop: {
@@ -270,10 +273,13 @@ export const messages: Record<Lang, Messages> = {
     },
 
     resolution: {
-      original: '\u30aa\u30ea\u30b8\u30ca\u30eb',
+      original: 'オリジナル',
       '960p': '960p',
       '480p': '480p',
       '240p': '240p',
+      proportional: '縦横',
+      heightOnly: '縦のみ',
+      heightOnlyDesc: 'アナログ映像には横のピクセル解像度がなく、走査線数（縦）のみが解像度を決定します',
     },
 
     crop: {

@@ -53,6 +53,7 @@ export interface CropArea {
 
 export interface ProcessingSettings {
   resizeHeight: number | null        // null = original
+  resizeHeightOnly: boolean          // true = only shrink height, keep original width
   crop: CropArea | null              // null = no crop
   outputHeight: number | null        // null = same as processing
 }
