@@ -6,23 +6,23 @@ interface Props {
   onChange: (axes: AxisPresets) => void
 }
 
-function AxisSelect<K extends keyof AxisPresets>({
+function AxisSelect({
   label,
   value,
   options,
   onChange,
 }: {
   label: string
-  value: AxisPresets[K]
-  options: { label: string; value: AxisPresets[K] }[]
-  onChange: (v: AxisPresets[K]) => void
+  value: string
+  options: { label: string; value: string }[]
+  onChange: (v: string) => void
 }) {
   return (
     <Box as="label" fontSize="sm" display="flex" flexDirection="column" gap="1">
       <Text fontSize="sm">{label}</Text>
       <select
         value={value as string}
-        onChange={e => onChange(e.currentTarget.value as AxisPresets[K])}
+        onChange={e => onChange(e.currentTarget.value)}
         style={{ width: '100%', padding: '4px 8px', borderRadius: '4px', border: '1px solid #555', background: 'transparent', color: 'inherit' }}
       >
         {options.map(o => (
@@ -45,7 +45,7 @@ export function AxisControls({ axes, onChange }: Props) {
           { label: 'Standard', value: 'standard' },
           { label: 'Degraded', value: 'degraded' },
         ]}
-        onChange={v => onChange({ ...axes, ntsc: v })}
+        onChange={v => onChange({ ...axes, ntsc: v as AxisPresets['ntsc'] })}
       />
       <AxisSelect
         label="VHS Tape Speed"
@@ -56,7 +56,7 @@ export function AxisControls({ axes, onChange }: Props) {
           { label: 'LP', value: 'LP' },
           { label: 'EP', value: 'EP' },
         ]}
-        onChange={v => onChange({ ...axes, vhs: v })}
+        onChange={v => onChange({ ...axes, vhs: v as AxisPresets['vhs'] })}
       />
       <AxisSelect
         label="Noise"
@@ -66,7 +66,7 @@ export function AxisControls({ axes, onChange }: Props) {
           { label: 'Light', value: 'light' },
           { label: 'Heavy', value: 'heavy' },
         ]}
-        onChange={v => onChange({ ...axes, noise: v })}
+        onChange={v => onChange({ ...axes, noise: v as AxisPresets['noise'] })}
       />
       <AxisSelect
         label="Ghost"
@@ -76,7 +76,7 @@ export function AxisControls({ axes, onChange }: Props) {
           { label: 'Light', value: 'light' },
           { label: 'Heavy', value: 'heavy' },
         ]}
-        onChange={v => onChange({ ...axes, ghost: v })}
+        onChange={v => onChange({ ...axes, ghost: v as AxisPresets['ghost'] })}
       />
       <AxisSelect
         label="Color Bleed"
@@ -86,7 +86,7 @@ export function AxisControls({ axes, onChange }: Props) {
           { label: 'Light', value: 'light' },
           { label: 'Heavy', value: 'heavy' },
         ]}
-        onChange={v => onChange({ ...axes, colorBleed: v })}
+        onChange={v => onChange({ ...axes, colorBleed: v as AxisPresets['colorBleed'] })}
       />
     </Box>
   )

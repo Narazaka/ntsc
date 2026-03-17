@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'preact/hooks'
-import { Box, Flex, VStack, Heading, Text, Button, Checkbox } from '@chakra-ui/react'
+import { Box, Flex, Heading, Button, Checkbox } from '@chakra-ui/react'
 import { ImageInput } from './components/ImageInput'
 import { ResizeControls } from './components/ResizeControls'
 import { PresetBar } from './components/PresetBar'
@@ -48,7 +48,7 @@ export function App() {
         setWorkerReady(true)
       } else if (msg.type === 'result') {
         if (msg.id === requestIdRef.current) {
-          const blob = new Blob([msg.imageData], { type: 'image/png' })
+          const blob = new Blob([msg.imageData as unknown as BlobPart], { type: 'image/png' })
           const url = URL.createObjectURL(blob)
           setProcessedUrl(prev => { if (prev) URL.revokeObjectURL(prev); return url })
           setProcessing(false)

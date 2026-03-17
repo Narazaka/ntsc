@@ -1,6 +1,6 @@
 import type { WorkerInMessage, WorkerOutMessage, NtscParams, ProcessingSettings } from '../types'
 
-declare const self: DedicatedWorkerGlobalScope
+declare const self: Worker & typeof globalThis
 
 let pyodide: any = null
 
