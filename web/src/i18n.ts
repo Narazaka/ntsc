@@ -44,6 +44,7 @@ export const messages: Record<Lang, Messages> = {
     resolution: {
       original: 'Original',
       '960p': '960p',
+      '486p': '486p (NTSC)',
       '480p': '480p',
       '240p': '240p',
       proportional: 'Scale all',
@@ -282,6 +283,7 @@ export const messages: Record<Lang, Messages> = {
     resolution: {
       original: 'オリジナル',
       '960p': '960p',
+      '486p': '486p (NTSC)',
       '480p': '480p',
       '240p': '240p',
       proportional: '縦横',

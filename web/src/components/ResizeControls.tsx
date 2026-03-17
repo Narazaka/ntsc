@@ -13,6 +13,7 @@ export function ResizeControls({ settings, onChange }: Props) {
   const resolutions: { label: string; value: number | null }[] = [
     { label: t('resolution.original'), value: null },
     { label: t('resolution.960p'), value: 960 },
+    { label: t('resolution.486p'), value: 486 },
     { label: t('resolution.480p'), value: 480 },
     { label: t('resolution.240p'), value: 240 },
   ]
