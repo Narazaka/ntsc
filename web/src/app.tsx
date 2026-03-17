@@ -262,7 +262,7 @@ export function App() {
           crop={settings.crop}
           onChange={crop => setSettings(s => ({ ...s, crop }))}
         />
-        <PresetBar onSelect={handlePreset} />
+        <PresetBar axes={axes} onSelect={handlePreset} />
         <AxisControls axes={axes} onChange={handleAxesChange} />
         <DetailControls params={params} onChange={setParams} />
       </Box>
