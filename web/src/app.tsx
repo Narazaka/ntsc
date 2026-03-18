@@ -364,7 +364,7 @@ export function App() {
           crop={settings.crop}
           onChange={crop => setSettings(s => ({ ...s, crop }))}
         />
-        <TextOverlay originalUrl={originalUrl} items={textOverlays} onChange={setTextOverlays} />
+        <TextOverlay originalUrl={croppedOriginalUrl ?? originalUrl} items={textOverlays} onChange={setTextOverlays} />
         <PresetBar axes={axes} onSelect={handlePreset} />
         <AxisControls axes={axes} onChange={handleAxesChange} />
         <DetailControls params={params} onChange={setParams} />
