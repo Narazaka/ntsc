@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'preact/hooks'
 import { Box, Flex, Heading, Button, Checkbox } from '@chakra-ui/react'
-import { Github, Twitter } from 'lucide-react'
+import { Github, Twitter, Copy, Download } from 'lucide-react'
 import { useI18n } from './i18n'
 import { ImageInput } from './components/ImageInput'
 import { ResizeControls } from './components/ResizeControls'
@@ -206,6 +206,18 @@ export function App() {
     a.click()
   }, [processedUrl])
 
+  // Copy to clipboard
+  const handleCopy = useCallback(async () => {
+    if (!processedUrl) return
+    const res = await fetch(processedUrl)
+    const blob = await res.blob()
+    try {
+      await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })])
+    } catch (_) {
+      // Clipboard API not supported or permission denied
+    }
+  }, [processedUrl])
+
   // Share
   const handleShare = useCallback(async () => {
     if (!processedUrl) return
@@ -272,14 +284,17 @@ export function App() {
           </Button>
           {processedUrl && (
             <>
-              <Button variant="outline" onClick={handleDownload}>
-                {t('app.download')}
+              <Button variant="outline" onClick={handleDownload} p="1" minW="auto" title={t('app.download')}>
+                <Download size={16} />
               </Button>
               {typeof navigator !== 'undefined' && navigator.canShare?.({ files: [new File([], '')] }) && (
                 <Button variant="outline" onClick={handleShare}>
                   {t('app.share')}
                 </Button>
               )}
+              <Button variant="outline" onClick={handleCopy} p="1" minW="auto" title={t('app.copy')}>
+                <Copy size={16} />
+              </Button>
               <Button variant="outline" onClick={handleShareX} p="1" minW="auto" title={t('app.shareX')}>
                 <Twitter size={16} />
               </Button>
