@@ -175,7 +175,7 @@ export function TextOverlay({ originalUrl, items, onChange }: Props) {
                     )}
                   </select>
                   {!localFontsLoaded && 'queryLocalFonts' in window && (
-                    <Button size="xs" variant="ghost" onClick={loadLocalFonts} p="1" minW="auto" title={t('textOverlay.loadLocalFonts')}>
+                    <Button size="xs" variant="solid" onClick={loadLocalFonts} p="1" minW="auto" title={t('textOverlay.loadLocalFonts')}>
                       +
                     </Button>
                   )}
