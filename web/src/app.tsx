@@ -270,6 +270,8 @@ export function App() {
             {t('app.subtitleBefore')}
             <a href="https://github.com/zhuker/ntsc" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>{t('app.subtitleLink')}</a>
             {t('app.subtitleAfter')}
+            {' / '}
+            <a href="https://x.com/hashtag/NTSC_VHS_EFFECT" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>#NTSC_VHS_EFFECT</a>
           </Box>
         </Box>
 
