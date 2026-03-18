@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'preact/hooks'
+import { useCallback, useRef, useState, useEffect } from 'preact/hooks'
 import { Box } from '@chakra-ui/react'
 import type { TextOverlayItem } from '../types'
 
@@ -15,11 +15,20 @@ export function TextDragPreview({ originalUrl, items, onChange, selectedId, onSe
   const [containerHeight, setContainerHeight] = useState(0)
   const draggingRef = useRef<{ id: string; startX: number; startY: number; origX: number; origY: number } | null>(null)
 
-  const handleImageLoad = useCallback(() => {
+  const updateContainerHeight = useCallback(() => {
     if (containerRef.current) {
       setContainerHeight(containerRef.current.clientHeight)
     }
   }, [])
+
+  // Track container size changes (crop changes, window resize, image load)
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const ro = new ResizeObserver(() => updateContainerHeight())
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [updateContainerHeight])
 
   const handlePointerDown = useCallback((e: PointerEvent, item: TextOverlayItem) => {
     e.preventDefault()
@@ -54,7 +63,7 @@ export function TextDragPreview({ originalUrl, items, onChange, selectedId, onSe
       onPointerUp={handlePointerUp}
       userSelect="none"
     >
-      <img src={originalUrl} onLoad={handleImageLoad} style={{ maxWidth: '100%', display: 'block' }} />
+      <img src={originalUrl} onLoad={updateContainerHeight} style={{ maxWidth: '100%', display: 'block' }} />
       {items.map(item => {
         const fsPx = containerHeight * item.fontSize / 100
         const strokePx = item.strokeWidth * (fsPx / 20)
