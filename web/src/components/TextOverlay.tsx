@@ -59,6 +59,7 @@ export function TextOverlay({ originalUrl, items, onChange }: Props) {
       x: 50,
       y: 50,
       fontSize: 5,
+      fontWeight: 400,
       color: '#ffffff',
       strokeColor: '#000000',
       strokeWidth: 2,
@@ -139,6 +140,14 @@ export function TextOverlay({ originalUrl, items, onChange }: Props) {
                     onInput={e => updateItem(item.id, { fontSize: Number((e.target as HTMLInputElement).value) })}
                     style={{ flex: 1 }} />
                   <Text w="30px" textAlign="right">{item.fontSize}%</Text>
+                </Box>
+
+                <Box display="flex" alignItems="center" gap="2">
+                  <Text flexShrink={0}>{t('textOverlay.fontWeight')}</Text>
+                  <input type="range" min={100} max={900} step={100} value={item.fontWeight}
+                    onInput={e => updateItem(item.id, { fontWeight: Number((e.target as HTMLInputElement).value) })}
+                    style={{ flex: 1 }} />
+                  <Text w="30px" textAlign="right">{item.fontWeight}</Text>
                 </Box>
 
                 <Box display="flex" alignItems="center" gap="2">

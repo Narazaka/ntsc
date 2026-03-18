@@ -4,6 +4,7 @@ export interface TextOverlayItem {
   x: number           // percent 0-100
   y: number           // percent 0-100
   fontSize: number     // percent of image height
+  fontWeight: number   // 100-900
   color: string
   strokeColor: string
   strokeWidth: number

@@ -121,7 +121,7 @@ export function App() {
           const px = img.width * item.x / 100
           const py = img.height * item.y / 100
           const fsPx = img.height * item.fontSize / 100
-          ctx.font = `${fsPx}px ${item.fontFamily}`
+          ctx.font = `${item.fontWeight} ${fsPx}px ${item.fontFamily}`
           ctx.textAlign = 'center'
           ctx.textBaseline = 'middle'
           if (item.strokeWidth > 0) {

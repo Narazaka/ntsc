@@ -78,6 +78,7 @@ export function TextDragPreview({ originalUrl, items, onChange, selectedId, onSe
           onPointerDown={(e: PointerEvent) => handlePointerDown(e, item)}
           style={{
             fontSize: `${fsPx}px`,
+            fontWeight: item.fontWeight,
             fontFamily: item.fontFamily,
             color: item.color,
             WebkitTextStroke: item.strokeWidth > 0 ? `${strokePx}px ${item.strokeColor}` : undefined,
