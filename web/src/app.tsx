@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'preact/hooks'
 import { Box, Flex, Heading, Button, Checkbox } from '@chakra-ui/react'
-import { Github, Twitter, Copy, Download } from 'lucide-react'
+import { Github, Twitter, Copy, Download, Check } from 'lucide-react'
 import { useI18n } from './i18n'
 import { ImageInput } from './components/ImageInput'
 import { ResizeControls } from './components/ResizeControls'
@@ -35,6 +35,7 @@ export function App() {
   const [processing, setProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [workerReady, setWorkerReady] = useState(false)
+  const [copied, setCopied] = useState(false)
 
   // Worker
   const workerRef = useRef<Worker | null>(null)
@@ -213,6 +214,8 @@ export function App() {
     const blob = await res.blob()
     try {
       await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })])
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1500)
     } catch (_) {
       // Clipboard API not supported or permission denied
     }
@@ -292,8 +295,8 @@ export function App() {
                   {t('app.share')}
                 </Button>
               )}
-              <Button variant="outline" onClick={handleCopy} p="1" minW="auto" title={t('app.copy')}>
-                <Copy size={16} />
+              <Button variant={copied ? 'solid' : 'outline'} onClick={handleCopy} p="1" minW="auto" title={t('app.copy')}>
+                {copied ? <Check size={16} /> : <Copy size={16} />}
               </Button>
               <Button variant="outline" onClick={handleShareX} p="1" minW="auto" title={t('app.shareX')}>
                 <Twitter size={16} />
