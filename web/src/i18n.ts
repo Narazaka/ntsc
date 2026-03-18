@@ -85,6 +85,19 @@ export const messages: Record<Lang, Messages> = {
       processingSettings: 'Processing Settings',
     },
 
+    textOverlay: {
+      heading: 'Text Overlay',
+      addText: 'Add Text',
+      placeholder: 'Enter text...',
+      fontSize: 'Size',
+      color: 'Fill',
+      strokeColor: 'Stroke',
+      strokeWidth: 'Stroke W',
+      fontFamily: 'Font',
+      localFonts: 'Local Fonts',
+      loadLocalFonts: 'Load local fonts',
+    },
+
     // --- Axes -----------------------------------------------------------------
 
     axis: {
@@ -323,8 +336,21 @@ export const messages: Record<Lang, Messages> = {
     section: {
       presets: '\u30d7\u30ea\u30bb\u30c3\u30c8',
       effectAxes: '\u30a8\u30d5\u30a7\u30af\u30c8\u8ef8',
-      detailParameters: '\u8a73\u7d30\u30d1\u30e9\u30e1\u30fc\u30bf',
-      processingSettings: '\u51e6\u7406\u8a2d\u5b9a',
+      detailParameters: '詳細パラメータ',
+      processingSettings: '処理設定',
+    },
+
+    textOverlay: {
+      heading: 'テキストオーバーレイ',
+      addText: 'テキスト追加',
+      placeholder: 'テキストを入力...',
+      fontSize: 'サイズ',
+      color: '塗り',
+      strokeColor: '縁取り',
+      strokeWidth: '縁幅',
+      fontFamily: 'フォント',
+      localFonts: 'ローカルフォント',
+      loadLocalFonts: 'ローカルフォントを読み込む',
     },
 
     axis: {

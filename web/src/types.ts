@@ -1,3 +1,15 @@
+export interface TextOverlayItem {
+  id: string
+  text: string
+  x: number           // percent 0-100
+  y: number           // percent 0-100
+  fontSize: number     // percent of image height
+  color: string
+  strokeColor: string
+  strokeWidth: number
+  fontFamily: string
+}
+
 export interface NtscParams {
   // Composite signal
   compositePreemphasis: number       // 0..8

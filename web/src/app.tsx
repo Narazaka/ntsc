@@ -8,9 +8,10 @@ import { CropControl } from './components/CropControl'
 import { PresetBar } from './components/PresetBar'
 import { AxisControls } from './components/AxisControls'
 import { DetailControls } from './components/DetailControls'
+import { TextOverlay } from './components/TextOverlay'
 import { Preview } from './components/Preview'
 import { DEFAULT_PARAMS, applyAxisPresets, COMBINED_PRESETS } from './presets'
-import type { NtscParams, ProcessingSettings, AxisPresets, CombinedPresetName, WorkerOutMessage } from './types'
+import type { NtscParams, ProcessingSettings, AxisPresets, CombinedPresetName, WorkerOutMessage, TextOverlayItem } from './types'
 
 export function App() {
   const { t, lang, setLang } = useI18n()
@@ -20,6 +21,9 @@ export function App() {
   const [originalUrl, setOriginalUrl] = useState<string | null>(null)
   const [croppedOriginalUrl, setCroppedOriginalUrl] = useState<string | null>(null)
   const [processedUrl, setProcessedUrl] = useState<string | null>(null)
+
+  // Text overlay state
+  const [textOverlays, setTextOverlays] = useState<TextOverlayItem[]>([])
 
   // Parameter state
   const [params, setParams] = useState<NtscParams>({ ...DEFAULT_PARAMS, ...applyAxisPresets(COMBINED_PRESETS['vhs-ep-ghost']) })
@@ -95,8 +99,49 @@ export function App() {
     img.src = import.meta.env.BASE_URL + 'sample.jpg'
   }, [])
 
+  // Compose image with text overlays
+  const composeImage = useCallback(async (): Promise<Uint8Array> => {
+    if (!originalUrl || !imageSize || textOverlays.length === 0) {
+      return imageData!.slice()
+    }
+    return new Promise((resolve) => {
+      const img = new Image()
+      img.onload = () => {
+        const canvas = document.createElement('canvas')
+        canvas.width = img.width
+        canvas.height = img.height
+        const ctx = canvas.getContext('2d')!
+        ctx.drawImage(img, 0, 0)
+
+        for (const item of textOverlays) {
+          if (!item.text) continue
+          const px = img.width * item.x / 100
+          const py = img.height * item.y / 100
+          const fsPx = img.height * item.fontSize / 100
+          ctx.font = `${fsPx}px ${item.fontFamily}`
+          ctx.textAlign = 'center'
+          ctx.textBaseline = 'middle'
+          if (item.strokeWidth > 0) {
+            ctx.strokeStyle = item.strokeColor
+            ctx.lineWidth = item.strokeWidth * (fsPx / 20)
+            ctx.lineJoin = 'round'
+            ctx.strokeText(item.text, px, py)
+          }
+          ctx.fillStyle = item.color
+          ctx.fillText(item.text, px, py)
+        }
+
+        canvas.toBlob((blob) => {
+          if (!blob) { resolve(imageData!.slice()); return }
+          blob.arrayBuffer().then(buf => resolve(new Uint8Array(buf)))
+        }, 'image/png')
+      }
+      img.src = originalUrl
+    })
+  }, [originalUrl, imageSize, imageData, textOverlays])
+
   // Process function
-  const process = useCallback(() => {
+  const process = useCallback(async () => {
     if (!imageData || !imageSize || !workerRef.current || !workerReady) return
     const id = ++requestIdRef.current
     setProcessing(true)
@@ -108,12 +153,12 @@ export function App() {
       outputHeight: settings.outputHeight === -1 ? imageSize.height : settings.outputHeight,
     }
 
-    const data = imageData.slice() // copy for transfer
+    const data = await composeImage()
     workerRef.current.postMessage(
       { type: 'process', id, imageData: data, width: imageSize.width, height: imageSize.height, params, settings: resolvedSettings },
       [data.buffer]
     )
-  }, [imageData, imageSize, params, settings, workerReady])
+  }, [imageData, imageSize, params, settings, workerReady, composeImage])
 
   // Realtime preview: debounce and auto-process on param change
   useEffect(() => {
@@ -319,6 +364,7 @@ export function App() {
           crop={settings.crop}
           onChange={crop => setSettings(s => ({ ...s, crop }))}
         />
+        <TextOverlay originalUrl={originalUrl} items={textOverlays} onChange={setTextOverlays} />
         <PresetBar axes={axes} onSelect={handlePreset} />
         <AxisControls axes={axes} onChange={handleAxesChange} />
         <DetailControls params={params} onChange={setParams} />
