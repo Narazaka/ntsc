@@ -221,7 +221,7 @@ export function App() {
 
   // Share to X (Twitter)
   const handleShareX = useCallback(() => {
-    const text = encodeURIComponent('#NTSC_VHS_EMU\nhttps://ntsc.narazaka.net/')
+    const text = encodeURIComponent(t('app.shareXText'))
     window.open(`https://x.com/intent/tweet?text=${text}`, '_blank')
   }, [])
 
