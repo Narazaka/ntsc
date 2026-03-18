@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'preact/hooks'
+import { useCallback, useRef, useState } from 'preact/hooks'
 import { Box } from '@chakra-ui/react'
 import type { TextOverlayItem } from '../types'
 
@@ -12,7 +12,14 @@ interface Props {
 
 export function TextDragPreview({ originalUrl, items, onChange, selectedId, onSelect }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const [containerHeight, setContainerHeight] = useState(0)
   const draggingRef = useRef<{ id: string; startX: number; startY: number; origX: number; origY: number } | null>(null)
+
+  const handleImageLoad = useCallback(() => {
+    if (containerRef.current) {
+      setContainerHeight(containerRef.current.clientHeight)
+    }
+  }, [])
 
   const handlePointerDown = useCallback((e: PointerEvent, item: TextOverlayItem) => {
     e.preventDefault()
@@ -47,8 +54,11 @@ export function TextDragPreview({ originalUrl, items, onChange, selectedId, onSe
       onPointerUp={handlePointerUp}
       userSelect="none"
     >
-      <img src={originalUrl} style={{ maxWidth: '100%', display: 'block' }} />
-      {items.map(item => (
+      <img src={originalUrl} onLoad={handleImageLoad} style={{ maxWidth: '100%', display: 'block' }} />
+      {items.map(item => {
+        const fsPx = containerHeight * item.fontSize / 100
+        const strokePx = item.strokeWidth * (fsPx / 20)
+        return (
         <Box
           key={item.id}
           position="absolute"
@@ -58,10 +68,10 @@ export function TextDragPreview({ originalUrl, items, onChange, selectedId, onSe
           cursor="grab"
           onPointerDown={(e: PointerEvent) => handlePointerDown(e, item)}
           style={{
-            fontSize: `${item.fontSize}%`,
+            fontSize: `${fsPx}px`,
             fontFamily: item.fontFamily,
             color: item.color,
-            WebkitTextStroke: item.strokeWidth > 0 ? `${item.strokeWidth}px ${item.strokeColor}` : undefined,
+            WebkitTextStroke: item.strokeWidth > 0 ? `${strokePx}px ${item.strokeColor}` : undefined,
             paintOrder: 'stroke fill',
             whiteSpace: 'nowrap',
             outline: selectedId === item.id ? '2px dashed rgba(0,150,255,0.8)' : 'none',
@@ -70,7 +80,8 @@ export function TextDragPreview({ originalUrl, items, onChange, selectedId, onSe
         >
           {item.text || '...'}
         </Box>
-      ))}
+        )
+      })}
     </Box>
   )
 }
